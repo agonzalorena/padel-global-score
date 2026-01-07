@@ -21,6 +21,16 @@ public interface MatchRepo extends JpaRepository<Match, Long> {
             "ORDER BY m.id DESC")
     List<Match> findByTeams(Long teamAId, Long teamBId);
 
+    @Query("SELECT m " +
+            "FROM Match m " +
+            "WHERE ((m.teamA.id = :teamAId " +
+            "AND m.teamB.id = :teamBId) OR " +
+            "(m.teamA.id = :teamBId " +
+            "AND m.teamB.id = :teamAId)) AND " +
+            "YEAR(m.date) = :year" +
+            " ORDER BY m.id DESC")
+    List<Match> findByTeamsAndYear(Long teamAId, Long teamBId, int year);
+
 
     @Query("SELECT m " +
             "FROM Match m " +

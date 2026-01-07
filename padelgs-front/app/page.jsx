@@ -37,20 +37,29 @@ export default function Home() {
   const fetchResultsStatistics = async () => {
     const teamA = teams[0].teamA;
     const teamB = teams[0].teamB;
+
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/statistics?teamAId=${teamA.id}&teamBId=${teamB.id}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/statistics?teamAId=${teamA.id}&teamBId=${teamB.id}&year=2025`
       );
+
+      if (!response.ok) throw new Error("Error en el servidor");
+
       const res = await response.json();
-      console.log(res);
-      setResults(res.data);
-      setWin(
-        res.data.winMatchesTeamA > res.data.winMatchesTeamB ? teamA : teamB
-      );
-      console.log(win);
-      setLoading(false);
+      const stats = res.data;
+
+      setResults(stats);
+
+      // Determinar ganador o empate (0-0)
+      if (stats.winMatchesTeamA === 0 && stats.winMatchesTeamB === 0) {
+        setWin(null);
+      } else {
+        setWin(stats.winMatchesTeamA > stats.winMatchesTeamB ? teamA : teamB);
+      }
     } catch (error) {
       console.error("Error fetching results:", error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -66,11 +75,8 @@ export default function Home() {
   return (
     <>
       <div className="mt-5 max-w-4xl mx-auto flex flex-col items-center text-center">
-        <h2 className="bg-orange-300/20 rounded-t-2xl w-1/2 text-xl px-4 py-1">
-          Proximo partido:
-        </h2>
-        <div className="flex justify-center w-full px-2">
-          <div className="bg-orange-300/5 border-2 border-orange-300/20 p-5 rounded-2xl w-full">
+        <div className="flex justify-center w-full px-2 ">
+          <div className="bg-black shadow-amber-50/50 shadow-2xs p-5 clip-skew w-full">
             {lastMatch.state == "PENDING" ? (
               <div className="flex text-sm justify-center gap-10 md:gap-20 w-full">
                 <p>{getDay(lastMatch.date)}</p>

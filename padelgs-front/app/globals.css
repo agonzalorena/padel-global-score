@@ -1,139 +1,103 @@
 @import "tailwindcss";
 
 :root {
-  --geist-sans: "Geist Sans", sans-serif;
-  --geist-mono: "Geist Mono", monospace;
-  --background: oklch(12% 0 0);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(20% 0 0);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.18 0 0);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: #5ccb52;
-  --primary-foreground: oklch(0.12 0 0);
-  --secondary: oklch(0.25 0 0);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.75 0.19 142);
-  --accent-foreground: oklch(0.12 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.25 0 0);
-  --ring: oklch(0.75 0.19 142);
-  --chart-1: oklch(0.75 0.19 142);
-  --chart-2: oklch(0.7 0.2 85);
-  --chart-3: oklch(0.65 0.22 200);
-  --chart-4: oklch(0.8 0.15 60);
-  --chart-5: oklch(0.7 0.18 280);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.18 0 0);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.75 0.19 142);
-  --sidebar-primary-foreground: oklch(0.12 0 0);
-  --sidebar-accent: oklch(0.25 0 0);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.75 0.19 142);
+  --font-geist-sans: "Geist Sans", sans-serif;
+  --font-geist-mono: "Geist Mono", monospace;
+
+  --background: #2c2c2c;
+  --foreground: #ffffff;
+
+  --card: #414141;
+  --card-foreground: #f9f9f9;
+
+  --primary-foreground: #1e1e1e;
+
+  --secondary: #323131;
+  --secondary-foreground: #f9f9f9;
+
+  --muted: #454545;
+  --muted-foreground: #000000;
+
+  /* Agregamos las que faltaban para que el @apply funcione */
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #b3b3b3;
+  --radius: 0.5rem;
+
+  /* Un oro base más sofisticado (menos amarillo "taxi") */
+  --gold-primary: #d4af37;
+  --gold-light: #f9e498;
+  --gold-dark: #996515;
+
+  /* Gradiente para efecto metalizado */
+  --gold-gradient: linear-gradient(
+    135deg,
+    #bf953f,
+    #fcf6ba 25%,
+    #b38728 50%,
+    #fbf5b7 75%,
+    #aa771c
+  );
 }
-.dark {
-  --background: oklch(0.12 0 0);
-  --foreground: oklch(0.98 0 0);
-  --card: oklch(0.18 0 0);
-  --card-foreground: oklch(0.98 0 0);
-  --popover: oklch(0.18 0 0);
-  --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.75 0.19 142);
-  --primary-foreground: oklch(0.12 0 0);
-  --secondary: oklch(0.25 0 0);
-  --secondary-foreground: oklch(0.98 0 0);
-  --muted: oklch(0.25 0 0);
-  --muted-foreground: oklch(0.65 0 0);
-  --accent: oklch(0.75 0.19 142);
-  --accent-foreground: oklch(0.12 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.25 0 0);
-  --input: oklch(0.25 0 0);
-  --ring: oklch(0.75 0.19 142);
-  --chart-1: oklch(0.75 0.19 142);
-  --chart-2: oklch(0.7 0.2 85);
-  --chart-3: oklch(0.65 0.22 200);
-  --chart-4: oklch(0.8 0.15 60);
-  --chart-5: oklch(0.7 0.18 280);
-  --sidebar: oklch(0.18 0 0);
-  --sidebar-foreground: oklch(0.98 0 0);
-  --sidebar-primary: oklch(0.75 0.19 142);
-  --sidebar-primary-foreground: oklch(0.12 0 0);
-  --sidebar-accent: oklch(0.25 0 0);
-  --sidebar-accent-foreground: oklch(0.98 0 0);
-  --sidebar-border: oklch(0.25 0 0);
-  --sidebar-ring: oklch(0.75 0.19 142);
-}
-@theme inline {
+
+@theme {
+  /* No necesitas var() aquí si usas la sintaxis de Tailwind 4 */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  --background-image-gold-real: var(--gold-gradient);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
+
+  --color-primary: var(--gold-primary);
   --color-primary-foreground: var(--primary-foreground);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
+
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    /* Usamos directamente la variable de border */
+    border-color: var(--border);
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans);
   }
 }
 
-input {
-  color-scheme: dark;
-}
-input::placeholder {
-  color: var(--muted-foreground);
-  opacity: 0.5;
-}
-option {
-  background: #000;
-  color-scheme: dark;
-}
+/* Clases personalizadas */
 #cold {
-  transition: all 0.5s;
+  transition: all 0.5s ease-in-out;
   background-color: #0a1d3a;
   background-image: url("/nieve.png");
-  color: aqua;
+  color: #00ffff; /* aqua */
+}
+
+@utility gold-text {
+  background-image: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility clip-skew {
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
 }

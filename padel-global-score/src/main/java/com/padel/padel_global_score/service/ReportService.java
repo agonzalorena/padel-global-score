@@ -20,14 +20,31 @@ public class ReportService {
         this.teamService = teamService;
     }
 
-    public StatsDTO getStatsReport(Long teamAId, Long teamBId) {
+    public StatsDTO getStatsReport(Long teamAId, Long teamBId, int year) {
         //chequear que existan los equipos?
         teamService.getTeamById(teamAId);
         teamService.getTeamById(teamBId);
         //chequear que hayan jugado partidos?
-        if (matchRepo.findByTeams(teamAId, teamBId).isEmpty()) {
-            //error
-            throw new ResourceNotFoundException("No matches found between the specified teams.");
+        if (matchRepo.findByTeamsAndYear(teamAId, teamBId,year).isEmpty()) {
+            //error no hay partidos entre esos equipos
+            return new StatsDTO(
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L,
+                    0L
+            );
         }
         Long winGamesTeamA = matchRepo.countWonGamesByTeam(teamAId, teamBId, true);
         Long winGamesTeamB = matchRepo.countWonGamesByTeam(teamAId, teamBId, false);

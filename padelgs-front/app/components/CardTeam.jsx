@@ -60,7 +60,13 @@ const CardTeam = ({ team, wins, streak, win, urlTeam }) => {
       </div>
       <div id="Wins" className="text-center my-2 flex flex-col gap-1">
         <p className="text-muted-foreground text-sm">TOTAL WINS</p>
-        <p className={`text-4xl font-bold ${isWinner ? "text-primary" : ""}`}>
+        <p
+          className={`text-4xl font-bold ${
+            isWinner
+              ? "bg-gold-real bg-clip-text text-transparent font-black"
+              : ""
+          }`}
+        >
           {wins}
         </p>
       </div>
@@ -75,15 +81,15 @@ const CardTeam = ({ team, wins, streak, win, urlTeam }) => {
         <div className="min-h-18 flex justify-center items-center">
           {streak > 0 ? (
             <div className="flex justify-center items-center mt-2 ">
-              <p className="absolute right-1/2 bottom-0 text-2xl translate-x-1/2 text-[#FFFF00] font-bold z-20">
+              <p className="absolute right-1/2 bottom-0 text-2xl translate-x-1/2 bg-gold-real bg-clip-text text-transparent font-black z-20">
                 {streak}
               </p>
               <svg
-                fill="#FF6600"
+                fill="#E25822" //FF6600
                 viewBox="0 0 32 32"
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
-                className={`absolute w-20 h-20 right-1/2 z-10 translate-x-1/2 opacity-80 filter drop-shadow-[0_-6px_6px_rgba(255,0,0,0.7)] ${
+                className={`absolute animate-pulse w-20 h-20 right-1/2 z-10 translate-x-1/2 opacity-80 filter drop-shadow-[0_-6px_6px_rgba(255,0,0,0.7)] ${
                   streak > 0 ? "block" : "hidden"
                 }`}
               >

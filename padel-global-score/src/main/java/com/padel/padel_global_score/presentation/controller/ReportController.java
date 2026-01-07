@@ -19,8 +19,8 @@ public class ReportController {
     
 
     @GetMapping("")
-    public ResponseEntity<SuccessResponse> getStatsReport(@RequestParam Long teamAId, @RequestParam Long teamBId) {
+    public ResponseEntity<SuccessResponse> getStatsReport(@RequestParam Long teamAId, @RequestParam Long teamBId, @RequestParam int year) {
         return ResponseEntity.status(200)
-                .body(new SuccessResponse(200, service.getStatsReport(teamAId, teamBId)));
+                .body(new SuccessResponse(200, service.getStatsReport(teamAId, teamBId, year)));
     }
 }
