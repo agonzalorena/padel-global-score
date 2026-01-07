@@ -27,7 +27,7 @@ const Navbar = () => {
                 <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
               </svg>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold bg-gold-real bg-clip-text text-transparent font-black">
+            <h1 className="text-3xl md:text-4xl bg-gold-real bg-clip-text text-transparent font-black">
               Padel Global Score
             </h1>
           </a>
