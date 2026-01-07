@@ -54,7 +54,7 @@ const brands = [
 
 const Footer = () => {
   return (
-    <footer className="bg-[#19201b] w-full md:px-20 px-2 py-10 mt-8">
+    <footer className="bg-[#302e17] w-full md:px-20 px-2 py-10 mt-8">
       <div className="w-full">
         <h2 className="text-2xl font-bold font-mono mb-2">SPONSORS</h2>
       </div>

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/statistics")
 public class ReportController {
@@ -19,8 +21,8 @@ public class ReportController {
     
 
     @GetMapping("")
-    public ResponseEntity<SuccessResponse> getStatsReport(@RequestParam Long teamAId, @RequestParam Long teamBId, @RequestParam int year) {
+    public ResponseEntity<SuccessResponse> getStatsReport(@RequestParam Long teamAId, @RequestParam Long teamBId, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
         return ResponseEntity.status(200)
-                .body(new SuccessResponse(200, service.getStatsReport(teamAId, teamBId, year)));
+                .body(new SuccessResponse(200, service.getStatsReport(teamAId, teamBId, startDate, endDate)));
     }
 }

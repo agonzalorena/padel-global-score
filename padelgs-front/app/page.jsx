@@ -40,7 +40,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/statistics?teamAId=${teamA.id}&teamBId=${teamB.id}&year=2026`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/statistics?teamAId=${teamA.id}&teamBId=${teamB.id}&startDate=2026-01-01&endDate=2026-12-31`
       );
 
       if (!response.ok) throw new Error("Error en el servidor");

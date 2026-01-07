@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -27,9 +28,9 @@ public interface MatchRepo extends JpaRepository<Match, Long> {
             "AND m.teamB.id = :teamBId) OR " +
             "(m.teamA.id = :teamBId " +
             "AND m.teamB.id = :teamAId)) AND " +
-            "YEAR(m.date) = :year" +
+            "m.date BETWEEN :startDate AND :endDate" +
             " ORDER BY m.id DESC")
-    List<Match> findByTeamsAndYear(Long teamAId, Long teamBId, int year);
+    List<Match> findByTeamsAndYear(Long teamAId, Long teamBId, LocalDate startDate, LocalDate endDate);
 
 
     @Query("SELECT m " +
@@ -43,16 +44,17 @@ public interface MatchRepo extends JpaRepository<Match, Long> {
 
 
     @Query("""
-                SELECT SUM(
+                SELECT COALESCE (SUM(
                     CASE
                         WHEN :isTeamA = TRUE THEN s.gamesTeamA
                         ELSE s.gamesTeamB
                     END
-                )
+                ),0)
                 FROM Match m JOIN m.sets s
                 WHERE (m.teamA.id = :teamAId AND m.teamB.id = :teamBId)
+                AND m.date BETWEEN :startDate AND :endDate
             """)
-    Long countWonGamesByTeam(Long teamAId, Long teamBId, boolean isTeamA);
+    Long countWonGamesByTeam(Long teamAId, Long teamBId, boolean isTeamA, LocalDate startDate, LocalDate endDate);
 
     @Query("""
                 SELECT COUNT(s)
@@ -63,11 +65,14 @@ public interface MatchRepo extends JpaRepository<Match, Long> {
                       OR
                       (:isTeamA = FALSE AND s.gamesTeamB > s.gamesTeamA)
                   )
+                  AND m.date BETWEEN :startDate AND :endDate
             """)
     Long countWonSetsByTeam(
             Long teamAId,
             Long teamBId,
-            boolean isTeamA
+            boolean isTeamA,
+            LocalDate startDate,
+            LocalDate endDate
     );
 
     @Query("""
@@ -79,11 +84,14 @@ public interface MatchRepo extends JpaRepository<Match, Long> {
                       OR
                       (:isTeamA = FALSE AND s.gamesTeamB = 7 AND s.gamesTeamA = 6)
                   )
+                  AND m.date BETWEEN :startDate AND :endDate
             """)
     Long countWonTiebreaksByTeam(
             Long teamAId,
             Long teamBId,
-            boolean isTeamA
+            boolean isTeamA,
+            LocalDate startDate,
+            LocalDate endDate
     );
 
     @Query("""
@@ -95,11 +103,14 @@ public interface MatchRepo extends JpaRepository<Match, Long> {
                       OR
                       (:isTeamA = FALSE AND m.winner.id = m.teamB.id)
                   )
+                  AND m.date BETWEEN :startDate AND :endDate
             """)
     Long countWonMatchesByTeam(
             Long teamAId,
             Long teamBId,
-            boolean isTeamA
+            boolean isTeamA,
+            LocalDate startDate,
+            LocalDate endDate
     );
 
 

@@ -15,8 +15,8 @@
   --secondary: #323131;
   --secondary-foreground: #f9f9f9;
 
-  --muted: #454545;
-  --muted-foreground: #000000;
+  --muted: #acacac;
+  --muted-foreground: #969696;
 
   /* Agregamos las que faltaban para que el @apply funcione */
   --border: #e5e7eb;

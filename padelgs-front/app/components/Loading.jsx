@@ -2,8 +2,11 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <svg className="w-1/2 h-1/2" viewBox="0 0 24 24" id="Layer_1">
+    <div className="w-full h-screen flex flex-col items-center justify-center">
+      <p className="absolute bg-gold-real bg-clip-text text-transparent font-black">
+        2026
+      </p>
+      <svg className="absolute w-1/2 h-1/2" viewBox="0 0 24 24" id="Layer_1">
         <defs>
           <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#bf953f" />
