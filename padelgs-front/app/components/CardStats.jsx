@@ -2,7 +2,7 @@ import React from "react";
 
 const CardStats = ({ name, total, winTeamA, winTeamB, percentage }) => {
   return (
-    <div className="bg-card/60 border border-black rounded-lg p-2 w-64 flex flex-col items-center gap-2">
+    <div className="bg-card/60 border border-black/60 rounded-lg p-2 w-64 flex flex-col items-center gap-2">
       <h3 className="text-sm text-muted-foreground">
         {name}
         {total != null ? `: ${total}` : ""}
