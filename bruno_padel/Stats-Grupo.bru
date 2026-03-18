@@ -1,0 +1,25 @@
+meta {
+  name: Stats-Grupo
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://localhost:8080/api/groups/mi-grupo/statistics?startDate=2024-01-01&endDate=2026-12-31
+  body: none
+  auth: bearer
+}
+
+params:query {
+  startDate: 2024-01-01
+  endDate: 2026-12-31
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE3NzM4NzU2MzUsImlhdCI6MTc3Mzc4OTIzNX0.HuhsJreOm-jhTI9G-weCg6XoA6AjIAvEgmTvKK7MtGy69imUsX-ToW-BBfrDiiiuSpDDFF14umS7zPbSVDGomQ
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

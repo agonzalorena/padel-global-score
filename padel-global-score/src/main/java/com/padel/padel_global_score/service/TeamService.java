@@ -2,11 +2,14 @@ package com.padel.padel_global_score.service;
 
 import com.padel.padel_global_score.exception.BadRequestException;
 import com.padel.padel_global_score.exception.ResourceNotFoundException;
+import com.padel.padel_global_score.persistence.entity.Grupo;
 import com.padel.padel_global_score.persistence.entity.Player;
 import com.padel.padel_global_score.persistence.entity.Team;
 import com.padel.padel_global_score.persistence.repository.TeamRepo;
 import com.padel.padel_global_score.presentation.dto.CreateTeamDTO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TeamService {
@@ -24,7 +27,7 @@ public class TeamService {
         }
         Player left = playerService.getPlayerById(dto.leftSideId());
         Player right = playerService.getPlayerById(dto.rightSideId());
-        //check if team exists
+
         if (repo.findByPlayers(left.getId(), right.getId()).isPresent()) {
             throw new BadRequestException("Team already exists");
         }
@@ -36,11 +39,12 @@ public class TeamService {
     }
 
     public Team getTeamByPlayers(Long leftId, Long rightId) {
-        return repo.findByPlayers(leftId, rightId).orElseThrow(() -> new ResourceNotFoundException("Team not found"));
+        return repo.findByPlayers(leftId, rightId)
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found"));
     }
 
     public Team getTeamById(Long id) {
-        return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Team not found"));
+        return repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Team not found"));
     }
-
 }

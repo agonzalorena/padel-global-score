@@ -1,5 +1,6 @@
 package com.padel.padel_global_score.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,4 +18,5 @@ public class Team {
     private Player rightSide;
     @Column(name = "url_photo")
     private String urlPhoto;
+
 }

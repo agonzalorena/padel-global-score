@@ -1,8 +1,7 @@
-import React from "react";
 import FormLogin from "../components/FormLogin";
 import TitleSections from "../components/TitleSections";
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <TitleSections
@@ -16,4 +15,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

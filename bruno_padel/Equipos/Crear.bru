@@ -5,18 +5,18 @@ meta {
 }
 
 post {
-  url: http:localhost:8080/api/teams
+  url: http:localhost:8080/api/groups/g2/teams
   body: json
   auth: bearer
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE3NjA4Nzg3NjIsImlhdCI6MTc2MDc5MjM2Mn0._qKIFz_I-TykgKHMAaLta0AVALFNp6VruAkDC33JwFrgMBjdTJ8rd5nAG4NkQKnNdquhugmkGpABzWh5JYyh1Q
+  token: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoiZzIiLCJncm91cFNsdWciOiJnMiIsImV4cCI6MTc3Mzg3ODE0OSwiaWF0IjoxNzczNzkxNzQ5fQ.IHn8EzHr-mClKvORnC0ZUvP5aAVKARWAXK2wZoBBhIJJLR4WBNV8YDvqvtAxxET6S4pBT2kQBsaAt04rzNK0QQ
 }
 
 body:json {
   {
-    "leftSideId":1,
+    "leftSideId":7,
     "rightSideId":3,
     "urlPhoto":"foto"
   }
@@ -24,4 +24,5 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

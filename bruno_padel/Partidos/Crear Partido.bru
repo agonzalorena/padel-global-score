@@ -5,25 +5,26 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/api/matches
+  url: http://localhost:8080/api/groups/g2/matches
   body: json
   auth: bearer
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE3NjE4NTE3ODIsImlhdCI6MTc2MTc2NTM4Mn0.2jPmW7D1Zq9zOAQlBembzoDsvCd1AxqMxeKWMt_o4e6Jzi0YFGUOkZPsdZU43AAFVpTTsvSuNZw0y6-sZLhzjA
+  token: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoiZzIiLCJncm91cFNsdWciOiJnMiIsImV4cCI6MTc3Mzg3NzQ3MiwiaWF0IjoxNzczNzkxMDcyfQ.7WbBWCZCfaQoP_nXzQAq3smuukMNxsGfqf2ZvuNgd1ELfiZZKj5M2-FZPeU5PwevIHX87IF54IWyWIFGq0uMPA
 }
 
 body:json {
   {
-    "date":"2025-12-27",
+    "date":"2027-12-27",
     "locationId":3,
     "time":"20:00:00",
-    "teamAId":1,
-    "teamBId":2
+    "teamAId":4,
+    "teamBId":5
   }
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

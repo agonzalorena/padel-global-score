@@ -9,13 +9,11 @@ public class CustomUserDetails extends User {
     private final Long userId;
 
     public CustomUserDetails(Long id, String username,
-                             String password, Collection<? extends GrantedAuthority> authorities) {
+                             String password,
+                             Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.userId = id;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
+    public Long getUserId() { return userId; }
 }

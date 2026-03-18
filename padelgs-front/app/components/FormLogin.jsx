@@ -7,7 +7,6 @@ const FormLogin = () => {
     const formData = new FormData(event.target);
     const username = formData.get("username");
     const password = formData.get("password");
-    //limpiar inputs
     event.target.reset();
 
     try {
@@ -15,27 +14,26 @@ const FormLogin = () => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password }),
-        }
+        },
       );
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error response data:", errorData.message);
-        throw new Error("Network response was not ok");
-      }
+      if (!response.ok) throw new Error("Login failed");
+
       const res = await response.json();
+      const token = res.data.token;
+      document.cookie = `token=${token}; path=/`;
 
-      document.cookie = `token=${res.data.token}; path=/`;
+      // Decodificar el JWT para obtener el groupSlug
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const slug = payload.groupSlug;
 
-      window.location.href = "/admin";
+      window.location.href = "/mis-grupos";
     } catch (error) {
-      console.log(error);
-      alert("Error logging in");
+      alert("Usuario o contraseña incorrectos");
     }
   };
+
   return (
     <div className="w-full flex justify-center p-4">
       <form

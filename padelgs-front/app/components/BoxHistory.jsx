@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import CardMatch from "./CardMatch.jsx";
 import Loading from "./Loading.jsx";
 
-const BoxHistory = () => {
-  const [params, setParams] = useState({});
+const BoxHistory = ({ slug }) => {
   const [teams, setTeams] = useState([]);
   const [locations, setLocations] = useState([]);
   const [size, setSize] = useState(4);
@@ -16,48 +15,36 @@ const BoxHistory = () => {
   const [teamA, setTeamA] = useState(null);
   const [teamB, setTeamB] = useState(null);
 
-  const fetchTeams = async () => {
+  const fetchMatches = async () => {
     try {
       setScrollPosition(window.scrollY);
       const query = new URLSearchParams();
-
-      if (params.teamAId) query.append("teamA", params.teamAId);
-      if (params.teamBId) query.append("teamB", params.teamBId);
       if (location !== "all") query.append("location", location);
       if (winner !== "all") query.append("winner", winner);
       query.append("page", 0);
       query.append("size", size);
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/matches?${query.toString()}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/groups/${slug}/matches?${query.toString()}`,
       );
       const res = await response.json();
       setTeams(res.data.content);
-      //si es el primer fetch, setear teamA y teamB
-      if (!teamA && res.data.content.length > 0) {
+      if (!teamA && res.data.content.length > 0)
         setTeamA(res.data.content[0].teamA);
-      }
-      if (!teamB && res.data.content.length > 0) {
+      if (!teamB && res.data.content.length > 0)
         setTeamB(res.data.content[0].teamB);
-      }
       setTotalElements(res.data.totalElements);
       setLoading(false);
       window.scrollTo(0, scrollPosition);
     } catch (error) {
-      console.error("Error fetching teams:", error);
+      console.error("Error fetching matches:", error);
     }
   };
-  const getParams = async () => {
-    const query = new URLSearchParams(window.location.search);
-    setParams({
-      teamAId: query.get("teamA"),
-      teamBId: query.get("teamB"),
-    });
-  };
+
   const fetchLocations = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/locations`,
       );
       const res = await response.json();
       setLocations(res.data);
@@ -67,25 +54,25 @@ const BoxHistory = () => {
   };
 
   useEffect(() => {
-    getParams();
     fetchLocations();
+    fetchMatches();
   }, []);
+
   useEffect(() => {
     window.scrollTo(0, scrollPosition);
   }, [teams]);
-  useEffect(() => {
-    if (!params.teamAId || !params.teamBId) return;
-    setLoading(true);
-    fetchTeams();
-  }, [params, size, location, winner]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    setLoading(true);
+    fetchMatches();
+  }, [size, location, winner]);
+
+  if (loading) return <Loading />;
+
   return (
     <section className="px-2">
       <div className="bg-card/40 p-2 flex justify-end gap-2 md:gap-4 text-xs rounded-lg">
-        <label htmlFor="">Lugar:</label>
+        <label>Lugar:</label>
         <select value={location} onChange={(e) => setLocation(e.target.value)}>
           <option value="all">Todos</option>
           {locations.map((loc) => (
@@ -94,7 +81,7 @@ const BoxHistory = () => {
             </option>
           ))}
         </select>
-        <label htmlFor="">Ganador:</label>
+        <label>Ganador:</label>
         <select value={winner} onChange={(e) => setWinner(e.target.value)}>
           <option value="all">Todos</option>
           <option value={teamA?.id}>
@@ -111,6 +98,7 @@ const BoxHistory = () => {
           <CardMatch match={match} />
         </div>
       ))}
+
       <div className="container px-5 py-2 mx-auto">
         {teams.length === 0 && (
           <div className="text-center">
@@ -119,10 +107,8 @@ const BoxHistory = () => {
         )}
         <div className="w-full flex justify-center">
           <button
-            className="px-5 py-2  bg-card/50 rounded-xl hover:bg-card/70 disabled:opacity-50"
-            onClick={() => {
-              setSize(size + 4);
-            }}
+            className="px-5 py-2 bg-card/50 rounded-xl hover:bg-card/70 disabled:opacity-50"
+            onClick={() => setSize(size + 4)}
             disabled={teams.length >= totalElements}
           >
             Ver más

@@ -15,4 +15,5 @@ public class AppUser {
     private String username;
     @Column(nullable = false)
     private String password;
+
 }

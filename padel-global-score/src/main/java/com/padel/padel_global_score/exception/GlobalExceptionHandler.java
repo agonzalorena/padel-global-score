@@ -99,4 +99,11 @@ public class GlobalExceptionHandler {
                 .body(new ErrorResponse(401, "Usuario o contraseña incorrectos"));
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ErrorResponse> handleForbiddenException(ForbiddenException ex) {
+        log.warn("Forbidden access attempt: {}", ex.getMessage());
+        return ResponseEntity.status(403)
+                .body(new ErrorResponse(403, "Acceso prohibido: " + ex.getMessage()));
+    }
+
 }

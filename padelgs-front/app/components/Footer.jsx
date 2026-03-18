@@ -1,5 +1,17 @@
+"use client";
 import React from "react";
 const brands = [
+  {
+    name: "Agustin Gonzalorena",
+    imgSrc: "/brands/MyLogo.webp",
+    link: "https://agonzalorena.com",
+  },
+
+  {
+    name: "Word Padel Tour",
+    imgSrc: "/brands/wpt1.webp",
+    link: "https://www.worldpadeltour.com/",
+  },
   {
     name: "Orella",
     imgSrc: "/brands/orella1.webp",
@@ -9,11 +21,6 @@ const brands = [
     name: "Red Bull TV",
     imgSrc: "/brands/redbull1.webp",
     link: "https://www.redbull.com/ar-es/live-events",
-  },
-  {
-    name: "Word Padel Tour",
-    imgSrc: "/brands/wpt1.webp",
-    link: "https://www.worldpadeltour.com/",
   },
   {
     name: "EA Sports",
@@ -87,7 +94,22 @@ const Footer = () => {
           >
             Recibir novedades
           </a>
-          <a href="/admin" className="mt-8 text-muted-foreground underline">
+          <a
+            href="/login"
+            className="mt-8 text-muted-foreground underline"
+            onClick={(e) => {
+              e.preventDefault();
+              const token = document.cookie
+                .split("; ")
+                .find((row) => row.startsWith("token="))
+                ?.split("=")[1];
+              if (token) {
+                window.location.href = "/mis-grupos";
+              } else {
+                window.location.href = "/login";
+              }
+            }}
+          >
             Administrar
           </a>
         </div>

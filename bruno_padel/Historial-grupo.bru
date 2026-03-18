@@ -1,0 +1,25 @@
+meta {
+  name: Historial-grupo
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:8080/api/groups/g3/matches?page=0&size=10
+  body: none
+  auth: bearer
+}
+
+params:query {
+  page: 0
+  size: 10
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJleHAiOjE3NzM4NzU2MzUsImlhdCI6MTc3Mzc4OTIzNX0.HuhsJreOm-jhTI9G-weCg6XoA6AjIAvEgmTvKK7MtGy69imUsX-ToW-BBfrDiiiuSpDDFF14umS7zPbSVDGomQ
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

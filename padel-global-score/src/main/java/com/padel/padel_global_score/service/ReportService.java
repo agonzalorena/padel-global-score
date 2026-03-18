@@ -1,5 +1,6 @@
 package com.padel.padel_global_score.service;
 
+import com.padel.padel_global_score.persistence.entity.Grupo;
 import com.padel.padel_global_score.persistence.entity.Match;
 import com.padel.padel_global_score.persistence.repository.MatchRepo;
 import com.padel.padel_global_score.presentation.dto.StatsDTO;
@@ -15,60 +16,41 @@ import java.util.Optional;
 public class ReportService {
     private final MatchRepo matchRepo;
     private final TeamService teamService;
+    private final GrupoService grupoService;
 
-    public ReportService(MatchRepo matchRepo, TeamService teamService) {
+    public ReportService(MatchRepo matchRepo, TeamService teamService, GrupoService grupoService) {
         this.matchRepo = matchRepo;
         this.teamService = teamService;
+        this.grupoService = grupoService;
     }
 
-    public StatsDTO getStatsReport(Long teamAId, Long teamBId, LocalDate startDate, LocalDate endDate) {
-        // 1. Validar equipos (fail-fast)
-        teamService.getTeamById(teamAId);
-        teamService.getTeamById(teamBId);
+    public StatsDTO getStatsReport(LocalDate startDate, LocalDate endDate, String slug) {
+        Grupo grupo = grupoService.getBySlug(slug);
+        Long teamAId = grupo.getTeamA().getId();
+        Long teamBId = grupo.getTeamB().getId();
 
-        // 2. Traer la lista UNA SOLA VEZ
         List<Match> matches = matchRepo.findByTeamsAndYear(teamAId, teamBId, startDate, endDate);
 
-        // 3. Si no hay partidos, devolver DTO en ceros inmediatamente
-        if (matches.isEmpty()) {
-            return buildEmptyStats();
-        }
+        if (matches.isEmpty()) return buildEmptyStats();
 
-        // 4. Calcular estadísticas de conteo (Games, Sets, Matches, Tiebreaks)
-        // Usamos Optional.ofNullable(...).orElse(0L) para evitar NullPointerException
         Long winGamesTeamA = safeCount(matchRepo.countWonGamesByTeam(teamAId, teamBId, true, startDate, endDate));
         Long winGamesTeamB = safeCount(matchRepo.countWonGamesByTeam(teamAId, teamBId, false, startDate, endDate));
-
         Long winSetsTeamA = safeCount(matchRepo.countWonSetsByTeam(teamAId, teamBId, true, startDate, endDate));
         Long winSetsTeamB = safeCount(matchRepo.countWonSetsByTeam(teamAId, teamBId, false, startDate, endDate));
-
         Long winTiebreaksTeamA = safeCount(matchRepo.countWonTiebreaksByTeam(teamAId, teamBId, true, startDate, endDate));
         Long winTiebreaksTeamB = safeCount(matchRepo.countWonTiebreaksByTeam(teamAId, teamBId, false, startDate, endDate));
-
         Long winMatchesTeamA = safeCount(matchRepo.countWonMatchesByTeam(teamAId, teamBId, true, startDate, endDate));
         Long winMatchesTeamB = safeCount(matchRepo.countWonMatchesByTeam(teamAId, teamBId, false, startDate, endDate));
 
-        // 5. Calcular Rachas (Pasando la lista que YA tenemos, sin ir a la BD)
         StreakStats streaks = calculateStreaks(matches, teamAId, teamBId);
 
-        // 6. Construir DTO
         return new StatsDTO(
-                winGamesTeamA,
-                winGamesTeamB,
-                winGamesTeamA + winGamesTeamB, // Total Games
-                winSetsTeamA,
-                winSetsTeamB,
-                winSetsTeamA + winSetsTeamB,   // Total Sets
-                winMatchesTeamA,
-                winMatchesTeamB,
-                winMatchesTeamA + winMatchesTeamB, // Total Matches
-                winTiebreaksTeamA,
-                winTiebreaksTeamB,
-                winTiebreaksTeamA + winTiebreaksTeamB, // Total Tiebreaks
-                streaks.maxStreakA,
-                streaks.maxStreakB,
-                streaks.currentStreakA,
-                streaks.currentStreakB
+                winGamesTeamA, winGamesTeamB, winGamesTeamA + winGamesTeamB,
+                winSetsTeamA, winSetsTeamB, winSetsTeamA + winSetsTeamB,
+                winMatchesTeamA, winMatchesTeamB, winMatchesTeamA + winMatchesTeamB,
+                winTiebreaksTeamA, winTiebreaksTeamB, winTiebreaksTeamA + winTiebreaksTeamB,
+                streaks.maxStreakA, streaks.maxStreakB,
+                streaks.currentStreakA, streaks.currentStreakB
         );
     }
 

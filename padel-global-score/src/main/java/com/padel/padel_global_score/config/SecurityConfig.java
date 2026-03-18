@@ -69,6 +69,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/matches/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/teams/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/locations/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/groups/**").permitAll()
                         .anyRequest().authenticated()
                 )
 

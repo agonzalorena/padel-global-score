@@ -26,10 +26,10 @@ const Stats = ({ results }) => {
           percentage={percentage}
         />
       </div>
-      <p className="text-xs text-white/20 text-center">
+      {/* <p className="text-xs text-white/20 text-center">
         A partir de aqui estan conciderados los encuentros donde se registraron
         los puntos.
-      </p>
+      </p> */}
       <div className="flex w-full gap-2 justify-center">
         <CardStats
           name={"Sets"}

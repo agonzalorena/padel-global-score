@@ -23,7 +23,9 @@ public class TeamController {
     }
 
     @GetMapping("/player")
-    ResponseEntity<SuccessResponse> getTeamByPlayers(@RequestParam Long leftId, @RequestParam Long rightId) {
+    ResponseEntity<SuccessResponse> getTeamByPlayers(
+            @RequestParam Long leftId,
+            @RequestParam Long rightId) {
         return ResponseEntity.status(200)
                 .body(new SuccessResponse(200, service.getTeamByPlayers(leftId, rightId)));
     }

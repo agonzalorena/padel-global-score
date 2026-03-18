@@ -42,12 +42,9 @@ public class TokenProvider {
     public String createToken(Authentication authentication) {
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
-
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
-
-        return Jwts
-                .builder()
+        return Jwts.builder()
                 .claim("userId", userDetails.getUserId())
                 .claim("username", userDetails.getUsername())
                 .signWith(key)
@@ -58,17 +55,12 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String token) {
         Claims claims = jwtParser.parseSignedClaims(token).getPayload();
-
         String username = claims.get("username", String.class);
         Long userId = claims.get("userId", Long.class);
         if (username == null) throw new RuntimeException("Token invalido");
-
-        //no hay authorities en el token, asi que le paso una lista vacia
         Collection<? extends GrantedAuthority> authorities = List.of();
-
-        CustomUserDetails primary = new CustomUserDetails(userId, username, "", authorities);
-
-        return new UsernamePasswordAuthenticationToken(primary, token, authorities);
+        CustomUserDetails principal = new CustomUserDetails(userId, username, "", authorities);
+        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
     public boolean validateToken(String authToken) {
