@@ -1,12 +1,9 @@
 import Link from "next/link";
 
 export default async function LandingPage() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/groups`,
-    {
-      cache: "no-store",
-    },
-  );
+  const response = await fetch(`${process.env.BASE_URL}/api/groups`, {
+    cache: "no-store",
+  });
   const res = await response.json();
   const groups = res.data?.content || res.data || [];
 
