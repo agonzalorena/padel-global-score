@@ -1,23 +1,23 @@
+"use client";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import Loading from "./components/Loading";
 
-export default async function LandingPage() {
-  console.log("BASE_URL:", process.env.NEXT_PUBLIC_BASE_URL);
-  console.log("Fetching:", `${process.env.NEXT_PUBLIC_BASE_URL}/api/groups`);
+export default function LandingPage() {
+  const [groups, setGroups] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/groups`,
-    {
-      cache: "no-store",
-    },
-  );
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/groups`)
+      .then((res) => res.json())
+      .then((data) => {
+        setGroups(data.data || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
-  console.log("Response status:", response.status);
-  console.log("Content-Type:", response.headers.get("content-type"));
-
-  const res = await response.json();
-  // ...
-
-  const groups = res.data?.content || res.data || [];
+  if (loading) return <Loading />;
 
   return (
     <div className="max-w-4xl mx-auto mt-10 px-4">
